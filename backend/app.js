@@ -30,6 +30,7 @@ const app = express();
 // Security HTTP headers
 app.use(
   helmet({
+    contentSecurityPolicy: false,
     crossOriginResourcePolicy: { policy: 'cross-origin' },
   })
 );
@@ -87,15 +88,19 @@ app.use('/api/analytics', analyticsRoutes);
 app.use('/api/admin', adminRoutes);
 
 // Serve frontend static build and support client-side routing in production
-if (process.env.NODE_ENV === 'production') {
-  const distPath = path.join(__dirname, '../frontend/dist');
+const distPath = path.join(__dirname, '../frontend/dist');
+const fs = require('fs');
+if (process.env.NODE_ENV === 'production' || fs.existsSync(distPath)) {
   app.use(express.static(distPath));
 
   app.get('*', (req, res, next) => {
     if (req.originalUrl.startsWith('/api')) {
       return next();
     }
-    res.sendFile(path.resolve(distPath, 'index.html'));
+    if (fs.existsSync(path.resolve(distPath, 'index.html'))) {
+      return res.sendFile(path.resolve(distPath, 'index.html'));
+    }
+    next();
   });
 }
 
