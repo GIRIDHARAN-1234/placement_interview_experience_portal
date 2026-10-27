@@ -1,0 +1,24 @@
+{
+  "name": "placement-interview-experience-project",
+  "version": "1.0.0",
+  "description": "Placement Interview Experience & Preparation Portal - Semester 7 Capstone Project",
+  "scripts": {
+    "start": "node backend/server.js",
+    "backend": "cd backend && npm run dev",
+    "frontend": "cd frontend && npm run dev",
+    "build": "npm install --prefix backend && npm install --prefix frontend && npm run build --prefix frontend",
+    "build:frontend": "cd frontend && npm run build",
+    "seed": "cd backend && npm run seed",
+    "test": "cd backend && npm test"
+  },
+  "keywords": [
+    "placement-portal",
+    "mern",
+    "react",
+    "node",
+    "express",
+    "mongodb"
+  ],
+  "author": "",
+  "license": "ISC"
+}
